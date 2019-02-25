@@ -12,6 +12,8 @@ public class BulletController : MonoBehaviour {
             Destroy(collision.gameObject);
         } else if (collision.gameObject.CompareTag("Player")) {
             GameManager.instance.TakeDamage(1);
+        } else if (collision.gameObject.CompareTag("Boss")) {
+            GameManager.instance.GameOver();
         }
 
         Destroy(gameObject);

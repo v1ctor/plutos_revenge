@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysicsObject : MonoBehaviour {
+public class PhysicsObject : MonoBehaviour
+{
 
     public float minGroundNormalY = 0.65f;
     public float gravityModifier = 1.0f;
@@ -36,7 +37,8 @@ public class PhysicsObject : MonoBehaviour {
         {
             gameObject.transform.Rotate(Vector3.up, 180);
             goingLeft = true;
-        } else if (goingLeft && targetVelocity.x > 0.0f)
+        }
+        else if (goingLeft && targetVelocity.x > 0.0f)
         {
             gameObject.transform.Rotate(Vector3.up, 180);
             goingLeft = false;
@@ -44,14 +46,16 @@ public class PhysicsObject : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         contactFilter.useTriggers = false;
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         contactFilter.useLayerMask = true;
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate() {
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
         velocity.x = targetVelocity.x;
         grounded = false;
@@ -68,36 +72,49 @@ public class PhysicsObject : MonoBehaviour {
         move = Vector2.up * deltaPosition.y;
 
         Movement(move, true);
-	}
+    }
 
     protected virtual void ComputeVelocity() { }
 
-    void Movement(Vector2 move, bool yMovement) {
+    protected virtual void OnCollisionEnterPhysics(Collider2D collision) { }
+
+    void Movement(Vector2 move, bool yMovement)
+    {
         float distance = move.magnitude;
-        if (distance > minMoveDistance) {
+        if (distance > minMoveDistance)
+        {
             int count = rb2d.Cast(move, contactFilter, raycasts, distance + shellRadius);
             hitBufferList.Clear();
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++)
+            {
                 hitBufferList.Add(raycasts[i]);
             }
 
-            for (int i = 0; i < hitBufferList.Count; i++) {
+            for (int i = 0; i < hitBufferList.Count; i++)
+            {
                 Vector2 currentNormal = hitBufferList[i].normal;
-                if (currentNormal.y > minGroundNormalY) {
+                if (currentNormal.y > minGroundNormalY)
+                {
                     grounded = true;
-                    if (yMovement) {
+                    if (yMovement)
+                    {
                         groundNormal = currentNormal;
                         groundNormal.x = 0f;
                     }
 
                 }
                 float projection = Vector2.Dot(velocity, currentNormal);
-                if (projection < 0f) {
+                if (projection < 0f)
+                {
                     velocity = velocity - projection * currentNormal;
                 }
 
                 float modifiedDistance = hitBufferList[i].distance - shellRadius;
-                distance = distance > modifiedDistance ? modifiedDistance : distance;
+                if (distance > modifiedDistance)
+                {
+                    distance = modifiedDistance;
+                    OnCollisionEnterPhysics(hitBufferList[i].collider);
+                }
             }
 
         }

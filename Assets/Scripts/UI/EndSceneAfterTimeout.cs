@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class EndAfterTime : MonoBehaviour {
+public class EndSceneAfterTimeout : MonoBehaviour {
 
     public float duration = 3f;
     public Animator animator;
@@ -23,6 +23,6 @@ public class EndAfterTime : MonoBehaviour {
     IEnumerator EndScene() {
         animator.SetTrigger("End");
         yield return new WaitForSeconds(1f);
-        GameSceneManager.instance.NextLevel();
+        GameSceneManager.instance.Load();
     }
 }

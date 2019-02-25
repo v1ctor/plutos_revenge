@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Boo.Lang;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-
     public static GameSceneManager instance = null;
 
+    public string[] levels;
     public string transitionScene;
-    public string firstLevel;
+    public string endGameScene;
+    public string mainMenuScene;
 
-    private float startTime;
-    private string nextLevel;
+    private int currentLevel;
 
     private void Awake()
     {
@@ -29,31 +28,33 @@ public class GameSceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Use this for initialization
-    void Start()
-    {
-        startTime = Time.time;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void NewGame()
     {
-        ChangeLevel(firstLevel);
+        ChangeLevel(0);
     }
 
-    public void ChangeLevel(string levelId)
+    public void RestartLevel() {
+        ChangeLevel(currentLevel);
+    }
+
+    public void NextLevel() {
+        currentLevel++;
+        ChangeLevel(currentLevel);
+    }
+
+    public void Load()
     {
-        nextLevel = levelId;
+        if (currentLevel < levels.Length)
+        {
+            SceneManager.LoadScene(levels[currentLevel]);
+        } else {
+            SceneManager.LoadScene(endGameScene);
+        }
+    }
+
+    private void ChangeLevel(int levelId)
+    {
         SceneManager.LoadScene(transitionScene);
     }
 
-    public void NextLevel()
-    {
-        SceneManager.LoadScene(nextLevel);
-    }
 }

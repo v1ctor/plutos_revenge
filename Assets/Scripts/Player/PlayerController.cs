@@ -21,4 +21,12 @@ public class PlayerController : PhysicsObject {
         targetVelocity = move * maxSpeed;
     }
 
+    protected override void OnCollisionEnterPhysics(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy")) {
+            GameManager.instance.TakeDamage(1);
+        } else if (collision.gameObject.CompareTag("Boss")) {
+            GameManager.instance.GameOver();
+        }
+    }
 }

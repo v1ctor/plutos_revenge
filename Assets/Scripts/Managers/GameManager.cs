@@ -1,20 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance = null;
 
-    public GameObject player;
-    public GameObject boss;
-
     public int initialHealth;
+    public float temporaryInvulnerabilityInterval = 3f;
 
-    public Text healthDisplay;
+    public int Health { set; get; }
 
-    private int health;
-    private int points;
+    private float invulnerabilityStopTime;
+    private bool invulnerability = false;
+    private Animator playerAnimator;
+    private GameObject player;
 
     void Awake()
     {
@@ -35,28 +35,52 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        health = initialHealth;
-        if (healthDisplay) {
-            healthDisplay.text = "Lives: " + health;
-        }
-        if (boss)
-        {
-            boss.SetActive(false);
-        }
+        player = GameObject.FindWithTag("Player");
+        playerAnimator = player.GetComponent<Animator>();
+        Health = initialHealth;
+        invulnerabilityStopTime = Time.time;
     }
 
-    public void TriggerBossFight()
+    private void Update()
     {
-        boss.SetActive(true);
-    }
-
-    public void TakeDamage(int damage) {
-        // TODO temproray invurnability
-        health -= damage;
-
-        if (healthDisplay)
+        if (Time.time > invulnerabilityStopTime)
         {
-            healthDisplay.text = "Lives: " + health;
+            invulnerability = false;
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        if (invulnerability)
+        {
+            return;
+        }
+        Health -= damage;
+
+        if (Health <= 0)
+        {
+            GameOver();
+            return;
+        }
+        StartInvulnerability();
+    }
+
+    public void GameOver()
+    {
+        GameSceneManager.instance.RestartLevel();
+    }
+
+
+    private bool HasInvulnerability()
+    {
+        return Time.time < invulnerabilityStopTime;
+    }
+
+    private void StartInvulnerability()
+    {
+        invulnerability = true;
+        invulnerabilityStopTime = Time.time + invulnerabilityStopTime;
+        playerAnimator.SetTrigger("Invulnerable");
+    }
+
 }
