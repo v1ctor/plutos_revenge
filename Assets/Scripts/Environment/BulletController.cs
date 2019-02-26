@@ -10,10 +10,11 @@ public class BulletController : MonoBehaviour {
 
         if (collision.gameObject.CompareTag("Enemy")) {
             Destroy(collision.gameObject);
-        } else if (collision.gameObject.CompareTag("Player")) {
-            GameManager.instance.TakeDamage(1);
         } else if (collision.gameObject.CompareTag("Boss")) {
-            GameManager.instance.GameOver();
+            // TODO move to boss if it's killed
+            GameManager.instance.NextLevel();
+        } else if (collision.gameObject.CompareTag("Player")) {
+            GameManager.instance.Player.TakeDamage(1);
         }
 
         Destroy(gameObject);

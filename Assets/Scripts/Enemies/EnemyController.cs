@@ -28,11 +28,11 @@ public class EnemyController : PhysicsObject
         }
     }
 
-    protected override void OnCollisionEnterPhysics(Collider2D collision)
+    public override void OnCollisionEnterPhysics(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.TakeDamage(1);
+            GameManager.instance.Player.TakeDamage(1);
         }
     }
 

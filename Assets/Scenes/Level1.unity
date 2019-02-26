@@ -718,8 +718,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1655568826}
-  deadZoneWidth: 5
-  deadZoneHeight: 10
+  deadZoneWidth: 3
+  deadZoneHeight: 3
   mode: 0
 --- !u!20 &519420031
 Camera:
@@ -1489,6 +1489,11 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114178597463686612, guid: 41b583483fea94a3f832c4dbd0964f95,
+        type: 2}
+      propertyPath: initialHealth
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41b583483fea94a3f832c4dbd0964f95, type: 2}

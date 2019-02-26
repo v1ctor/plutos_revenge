@@ -14,7 +14,10 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        UpdateHealthDisplay(GameManager.instance.Health);
+        if (GameManager.instance)
+        {
+            UpdateHealthDisplay(GameManager.instance.Health);
+        }
 	}
 
     void UpdateHealthDisplay(int health) {

@@ -5,6 +5,29 @@ public class PlayerController : PhysicsObject {
     public float maxSpeed = 7f;
     public float jumpTakeoffSpeed = 7f;
 
+    public int initialHealth;
+    public float temporaryInvulnerabilityInterval = 3f;
+
+    private float invulnerabilityStopTime;
+    private bool invulnerability = false;
+    private Animator playerAnimator;
+
+    protected override void Start()
+    {
+        base.Start();
+        GameManager.instance.Health = initialHealth;
+        GameManager.instance.Player = this;
+        playerAnimator = GetComponent<Animator>();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (invulnerability && Time.time > invulnerabilityStopTime) {
+            invulnerability = false;
+        }
+    }
+
     protected override void ComputeVelocity() {
         Vector2 move = Vector2.zero;
 
@@ -21,12 +44,54 @@ public class PlayerController : PhysicsObject {
         targetVelocity = move * maxSpeed;
     }
 
-    protected override void OnCollisionEnterPhysics(Collider2D collision)
+    public override void OnCollisionEnterPhysics(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy")) {
-            GameManager.instance.TakeDamage(1);
-        } else if (collision.gameObject.CompareTag("Boss")) {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(1);
+        }
+        else if (collision.gameObject.CompareTag("Bullet")) {
+            TakeDamage(1);
+        }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
             GameManager.instance.GameOver();
         }
+    }
+
+    private void StartInvulnerability()
+    {
+        invulnerability = true;
+        invulnerabilityStopTime = Time.time + temporaryInvulnerabilityInterval;
+        if (playerAnimator)
+        {
+            playerAnimator.SetTrigger("Invulnerable");
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (invulnerability) {
+            return;
+        }
+        GameManager.instance.Health -= damage;
+
+        if (GameManager.instance.Health <= 0)
+        {
+            GameOver();
+            return;
+        }
+
+        StartInvulnerability();
+    }
+
+    public void GameOver()
+    {
+        GameManager.instance.GameOver();
+    }
+
+    public void NextLevel()
+    {
+        GameManager.instance.NextLevel();
     }
 }

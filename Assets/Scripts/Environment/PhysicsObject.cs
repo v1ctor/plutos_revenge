@@ -29,7 +29,7 @@ public class PhysicsObject : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         targetVelocity = Vector2.zero;
         ComputeVelocity();
@@ -46,7 +46,7 @@ public class PhysicsObject : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
         contactFilter.useTriggers = false;
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
@@ -76,7 +76,7 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void ComputeVelocity() { }
 
-    protected virtual void OnCollisionEnterPhysics(Collider2D collision) { }
+    public virtual void OnCollisionEnterPhysics(Collider2D collision) { }
 
     void Movement(Vector2 move, bool yMovement)
     {
@@ -114,6 +114,7 @@ public class PhysicsObject : MonoBehaviour
                 {
                     distance = modifiedDistance;
                     OnCollisionEnterPhysics(hitBufferList[i].collider);
+
                 }
             }
 

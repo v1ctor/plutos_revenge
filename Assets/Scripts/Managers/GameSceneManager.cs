@@ -1,6 +1,6 @@
-﻿using Boo.Lang;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -30,16 +30,16 @@ public class GameSceneManager : MonoBehaviour
 
     public void NewGame()
     {
-        ChangeLevel(0);
+        SceneManager.LoadScene(transitionScene);
     }
 
     public void RestartLevel() {
-        ChangeLevel(currentLevel);
+        StartCoroutine(ChangeLevel(currentLevel));
     }
 
     public void NextLevel() {
         currentLevel++;
-        ChangeLevel(currentLevel);
+        StartCoroutine(ChangeLevel(currentLevel));
     }
 
     public void Load()
@@ -52,8 +52,9 @@ public class GameSceneManager : MonoBehaviour
         }
     }
 
-    private void ChangeLevel(int levelId)
+    private IEnumerator ChangeLevel(int levelId)
     {
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(transitionScene);
     }
 
