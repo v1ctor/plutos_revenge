@@ -458,7 +458,7 @@ Prefab:
     - target: {fileID: 114109618831613660, guid: 7b22792dda0ad41499289a5ae7aecf6b,
         type: 2}
       propertyPath: levels.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4007998618588112, guid: 7b22792dda0ad41499289a5ae7aecf6b, type: 2}
       propertyPath: m_LocalPosition.x

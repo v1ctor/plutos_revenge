@@ -2389,6 +2389,7 @@ GameObject:
   - component: {fileID: 1987186332}
   - component: {fileID: 1987186334}
   - component: {fileID: 1987186331}
+  - component: {fileID: 1987186335}
   m_Layer: 0
   m_Name: Neptune
   m_TagString: Boss
@@ -2483,6 +2484,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.28
+--- !u!114 &1987186335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1987186330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9202d141e28aa49fab8e50f7f23ec115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
 --- !u!1001 &1992842852
 Prefab:
   m_ObjectHideFlags: 0

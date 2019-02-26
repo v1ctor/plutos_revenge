@@ -90,8 +90,4 @@ public class PlayerController : PhysicsObject {
         GameManager.instance.GameOver();
     }
 
-    public void NextLevel()
-    {
-        GameManager.instance.NextLevel();
-    }
 }
