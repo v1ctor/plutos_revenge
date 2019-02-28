@@ -10,11 +10,18 @@ public class DeathZone : MonoBehaviour {
     {
         Instantiate(explosion, collision.transform.position, Quaternion.identity);
 
-        if (collision.gameObject.CompareTag("Player")) {
-            GameManager.instance.GameOver();
-        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.SetActive(false);
+            var c = collision.gameObject.GetComponent<PlayerController>();
+            c.GameOver();
 
-        Destroy(collision.gameObject);
+        }
+        else
+        {
+
+            Destroy(collision.gameObject);
+        }
 
     }
 }

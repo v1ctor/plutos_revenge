@@ -13,7 +13,6 @@ public class EnemyController : PhysicsObject
 
     public EnemyType enemyType = EnemyType.Walk;
 
-
     private Vector2 walkDirection = Vector2.left;
 
     protected override void ComputeVelocity()
@@ -32,7 +31,8 @@ public class EnemyController : PhysicsObject
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.Player.TakeDamage(1);
+            var c = collision.gameObject.GetComponent<PlayerController>();
+            c.TakeDamage(1);
         }
     }
 

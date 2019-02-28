@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 58528258107920252}
   - component: {fileID: 50028530979478280}
   - component: {fileID: 114178597463686612}
+  - component: {fileID: 95146160544149612}
   m_Layer: 0
   m_Name: Pluto
   m_TagString: Player
@@ -138,6 +139,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.64
+--- !u!95 &95146160544149612
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1919759693766808}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 564b7cee012fe4c129df22d3c086ec07, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114178597463686612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,6 +172,10 @@ MonoBehaviour:
   gravityModifier: 1
   maxSpeed: 10
   jumpTakeoffSpeed: 10
+  initialHealth: 5
+  temporaryInvulnerabilityInterval: 3
+  jumpSound: {fileID: 8300000, guid: 4f9a15b88fa634e01bd136cceb65ad11, type: 3}
+  deathSound: {fileID: 8300000, guid: d185a5d1dea6e489c9706959e75f29b7, type: 3}
 --- !u!114 &114350241998682182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 1000
   projectile: {fileID: 1447720847516464, guid: 5e99c22dc15494a0fbd9c3eba9159317, type: 2}
+  shotSound: {fileID: 8300000, guid: 3a4bf0aff82c5466081ecdb9804cd367, type: 3}
 --- !u!212 &212127597713673720
 SpriteRenderer:
   m_ObjectHideFlags: 1

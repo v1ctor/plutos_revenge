@@ -36,11 +36,13 @@ public class GameSceneManager : MonoBehaviour
         SceneManager.LoadScene(transitionScene);
     }
 
-    public void RestartLevel() {
+    public void RestartLevel()
+    {
         StartCoroutine(ChangeLevel(sceneName));
     }
 
-    public void NextLevel() {
+    public void NextLevel()
+    {
         currentLevel++;
         if (currentLevel < levels.Length)
         {
@@ -49,7 +51,8 @@ public class GameSceneManager : MonoBehaviour
         StartCoroutine(ChangeLevel(sceneName));
     }
 
-    public void Load(string sceneName) {
+    public void Load(string sceneName)
+    {
         SceneManager.LoadScene(sceneName);
     }
 
@@ -58,7 +61,9 @@ public class GameSceneManager : MonoBehaviour
         if (currentLevel < levels.Length)
         {
             SceneManager.LoadScene(sceneName);
-        } else {
+        }
+        else
+        {
             SceneManager.LoadScene(endGameScene);
         }
     }
@@ -66,7 +71,7 @@ public class GameSceneManager : MonoBehaviour
     private IEnumerator ChangeLevel(string sceneId)
     {
         sceneName = sceneId;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(transitionScene);
     }
 

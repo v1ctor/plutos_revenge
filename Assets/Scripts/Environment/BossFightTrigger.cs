@@ -9,9 +9,12 @@ public class BossFightTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            //GameManager.instance.TriggerBossFight();
-            //SceneManager.LoadScene("Level2");
-            boss.SetActive(true);
+            if (!GameManager.instance.HasBoss())
+            {
+                var c = boss.GetComponent<BossController>();
+                GameManager.instance.StartBossFight(c);
+                boss.SetActive(true);
+            }
         }
     }
 }

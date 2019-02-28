@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 
-public class PlayerController : PhysicsObject {
+public class PlayerController : PhysicsObject
+{
 
     public float maxSpeed = 7f;
     public float jumpTakeoffSpeed = 7f;
 
     public int initialHealth;
     public float temporaryInvulnerabilityInterval = 3f;
+
+    public AudioClip jumpSound;
+    public AudioClip deathSound;
 
     private float invulnerabilityStopTime;
     private bool invulnerability = false;
@@ -16,27 +20,33 @@ public class PlayerController : PhysicsObject {
     {
         base.Start();
         GameManager.instance.Health = initialHealth;
-        GameManager.instance.Player = this;
         playerAnimator = GetComponent<Animator>();
     }
 
     protected override void Update()
     {
         base.Update();
-        if (invulnerability && Time.time > invulnerabilityStopTime) {
+        if (invulnerability && Time.time > invulnerabilityStopTime)
+        {
             invulnerability = false;
         }
     }
 
-    protected override void ComputeVelocity() {
+    protected override void ComputeVelocity()
+    {
         Vector2 move = Vector2.zero;
 
         move.x = Input.GetAxis("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && grounded) {
+        if (Input.GetButtonDown("Jump") && grounded)
+        {
             velocity.y = jumpTakeoffSpeed;
-        } else if (Input.GetButtonUp("Jump")) {
-            if (velocity.y > 0f) {
+            SoundManager.instance.PlayClip(jumpSound, 0.1f);
+        }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            if (velocity.y > 0f)
+            {
                 velocity.y = velocity.y * 0.5f;
             }
         }
@@ -50,7 +60,8 @@ public class PlayerController : PhysicsObject {
         {
             TakeDamage(1);
         }
-        else if (collision.gameObject.CompareTag("Bullet")) {
+        else if (collision.gameObject.CompareTag("Bullet"))
+        {
             TakeDamage(1);
         }
         else if (collision.gameObject.CompareTag("Boss"))
@@ -71,7 +82,8 @@ public class PlayerController : PhysicsObject {
 
     public void TakeDamage(int damage)
     {
-        if (invulnerability) {
+        if (invulnerability)
+        {
             return;
         }
         GameManager.instance.Health -= damage;
@@ -87,6 +99,7 @@ public class PlayerController : PhysicsObject {
 
     public void GameOver()
     {
+        SoundManager.instance.PlayClip(deathSound, 1.0f);
         GameManager.instance.GameOver();
     }
 

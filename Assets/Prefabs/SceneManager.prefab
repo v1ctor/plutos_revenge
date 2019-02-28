@@ -51,4 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758c9a2e3ac2942c39b79b2f995e929a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levels: []
   transitionScene: TransitionScene
+  endGameScene: EndScene
+  mainMenuScene: MainMenu

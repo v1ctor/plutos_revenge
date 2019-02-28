@@ -12,10 +12,11 @@ public class BurstShoot : MonoBehaviour
     public int amount = 3;
     public int count = 3;
 
+    public AudioClip shootSound;
+
     private float nextFireBurst;
     private int currentBurst;
     private float nextBurst;
-
 
     void OnEnable()
     {
@@ -44,7 +45,7 @@ public class BurstShoot : MonoBehaviour
 
     void FireBurst()
     {
-
+        SoundManager.instance.PlayClip(shootSound, 1.0f);
         float angle = Mathf.PI / 2;
 
         float step = angle / amount;

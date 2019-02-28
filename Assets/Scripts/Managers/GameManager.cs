@@ -7,7 +7,15 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     public int Health { set; get; }
-    public PlayerController Player { set; get; }
+    public int BossHealth
+    {
+        get
+        {
+            return currentBoss.health;
+        }
+    }
+
+    private BossController currentBoss = null;
 
     void Awake()
     {
@@ -24,13 +32,25 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void StartBossFight(BossController boss)
+    {
+        currentBoss = boss;
+    }
+
+    public bool HasBoss()
+    {
+        return currentBoss != null;
+    }
+
     public void GameOver()
     {
+        currentBoss = null;
         GameSceneManager.instance.RestartLevel();
     }
 
     public void NextLevel()
     {
+        currentBoss = null;
         GameSceneManager.instance.NextLevel();
     }
 
