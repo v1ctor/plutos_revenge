@@ -7,6 +7,7 @@ public class EndSceneAfterTimeout : MonoBehaviour {
     public Animator animator;
 
     private float endTime;
+    private bool ended = false;
 
 	// Use this for initialization
 	void Start () {
@@ -15,14 +16,21 @@ public class EndSceneAfterTimeout : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (endTime < Time.time) {
+		if (!ended && endTime < Time.time) {
+            ended = true;
             StartCoroutine(EndScene());
         }
     }
 
     IEnumerator EndScene() {
-        animator.SetTrigger("End");
-        yield return new WaitForSeconds(1f);
-        GameSceneManager.instance.Load();
+        if (animator)
+        {
+            animator.SetTrigger("End");
+            yield return new WaitForSeconds(1f);
+            GameSceneManager.instance.Load();
+        } else {
+            GameSceneManager.instance.NextLevel();
+        }
+
     }
 }
