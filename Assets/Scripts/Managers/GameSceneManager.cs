@@ -29,6 +29,11 @@ public class GameSceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void MainMenu() {
+        currentLevel = 0;
+        StartCoroutine(ChangeLevel(mainMenuScene));
+    }
+
     public void NewGame()
     {
         currentLevel = 0;
@@ -47,6 +52,8 @@ public class GameSceneManager : MonoBehaviour
         if (currentLevel < levels.Length)
         {
             sceneName = levels[currentLevel];
+        } else {
+            sceneName = endGameScene;
         }
         StartCoroutine(ChangeLevel(sceneName));
     }
@@ -58,14 +65,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void Load()
     {
-        if (currentLevel < levels.Length)
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(endGameScene);
-        }
+        SceneManager.LoadScene(sceneName);
     }
 
     private IEnumerator ChangeLevel(string sceneId)
