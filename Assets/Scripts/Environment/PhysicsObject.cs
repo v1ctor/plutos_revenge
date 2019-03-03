@@ -21,7 +21,7 @@ public class PhysicsObject : MonoBehaviour
     protected const float minMoveDistance = 0.001f;
     protected const float shellRadius = 0.01f;
 
-    private bool goingLeft = false;
+    public bool goingLeft = false;
 
     void OnEnable()
     {

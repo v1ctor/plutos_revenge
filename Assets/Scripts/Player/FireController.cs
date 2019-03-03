@@ -7,6 +7,7 @@ public class FireController : MonoBehaviour
 
     public GameObject projectile;
     public AudioClip shotSound;
+    public PlayerController player;
 
     // Update is called once per frame
     void Update()
@@ -15,7 +16,10 @@ public class FireController : MonoBehaviour
         {
             GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
 
-            int direction = transform.rotation.y < 0.001f ? 1 : -1;
+            int direction = 1;
+            if (player && player.goingLeft) {
+                direction = -1;
+            }
 
             newProjectile.GetComponent<Rigidbody2D>().AddForce(Vector2.right * power * direction);
             SoundManager.instance.PlayClip(shotSound, 0.7f);
